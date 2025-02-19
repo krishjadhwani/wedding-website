@@ -1,7 +1,15 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": "./",
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "outDir": "dist",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "skipLibCheck": true,
+  }
 }
