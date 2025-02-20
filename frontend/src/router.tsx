@@ -23,7 +23,7 @@ export default function AppRouter() {
 
     return (
         <Router>
-            <NavBar />
+            {accessGranted && <NavBar />}
             <Routes>
                 {!accessGranted ? (
                     <Route path="*" element={<LandingPage onAccessGranted={handleAccessGranted} />} />
