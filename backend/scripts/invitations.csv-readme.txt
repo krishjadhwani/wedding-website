@@ -1,0 +1,16 @@
+In pgAdmin, go to wedding_db → invitations table.
+Right-click on invitations → Click Import/Export.
+Choose File: Select invitations.csv.
+Format: CSV.
+Delimiter: ,.
+Click Import.
+
+Alternatively, you can load it manually with SQL:
+
+sql
+Copy
+Edit
+COPY invitations(first_name, last_name, email, group_id)
+FROM '/absolute/path/to/invitations.csv'
+DELIMITER ','
+CSV HEADER;

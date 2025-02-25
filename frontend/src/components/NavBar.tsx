@@ -29,7 +29,7 @@ export default function NavBar() {
     ];
 
     return (
-        <nav className="bg-white shadow-md py-4 px-6 w-full fixed top-0 left-0 z-50">
+        <nav className="bg-white shadow-md px-6 w-full fixed top-0 left-0 z-50">
             <div className="flex justify-between items-center max-w-7xl mx-auto">
                 {/* Wedding Title */}
                 <h1 className="text-xl font-bold text-gray-800 italic">K & A</h1>

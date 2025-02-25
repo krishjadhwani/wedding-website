@@ -1,49 +1,45 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@/components/Button";
-import { Card, CardContent } from "@/components/Card";
-import { motion } from "framer-motion";
-import { fetchWeddingInfo } from "@/api";
-import backgroundImage from "@/assets/wedding-background.webp";
+import backgroundImage from "@/assets/IMG_8260.jpg";
 
 export default function HomePage() {
-  const [weddingInfo, setWeddingInfo] = useState<{ event: string; date: string; location: string } | null>(null);
   const navigate = useNavigate();
+  const [weddingInfo, setWeddingInfo] = useState<{ event: string; date: string; location: string } | null>(null);
 
   useEffect(() => {
-    fetchWeddingInfo().then(setWeddingInfo);
+    fetch("/api/wedding-info") // Mocked fetch for now
+      .then((res) => res.json())
+      .then(setWeddingInfo);
   }, []);
 
   return (
     <div
-      className="flex flex-col items-center justify-center min-h-screen p-4 text-white"
-      style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: "cover", backgroundPosition: "center" }}
+      className="relative w-full h-screen flex flex-col justify-between items-center text-white"
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "44% 50%",
+      }}
     >
-      <motion.h1
-        style={{ color: "white" }}
-        className="text-5xl font-extrabold mb-6 drop-shadow-lg"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        Krish & Anisha
-      </motion.h1>
-      {weddingInfo && (
-        <div className="text-lg mb-4 bg-white bg-opacity-75 text-gray-900 p-3 rounded-lg shadow-md">
-          {weddingInfo.event} <br />
-          {weddingInfo.date} <br />
-          {weddingInfo.location}
-        </div>
-      )}
-      <Card className="w-96 shadow-lg bg-opacity-90 bg-white text-black">
-        <CardContent className="p-4 text-center">
-          <p className="text-lg mb-4">
-            Join us for a magical wedding experience filled with love, laughter, and tradition!
-          </p>
-          <Button onClick={() => navigate("/rsvp")}>
-            RSVP Now
-          </Button>
-        </CardContent>
-      </Card>
+      {/* Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-50"></div>
+
+      {/* Title at the Top */}
+      <div className="relative z-10 text-center pt-10">
+        <h1 className="md:px-40 px-2 text-6xl md:text-7xl font-light italic">Krish & Anisha</h1>
+      </div>
+
+      {/* Date, Location, and RSVP at the Bottom */}
+      <div className="relative z-10 text-center bg-white bg-opacity-70 px-6 py-4 rounded-lg shadow-md">
+        <p className="text-xl font-semibold text-gray-900 font-light italic">
+          {weddingInfo?.date || "November 30 - December 1, 2025"}
+        </p>
+        <p className="text-lg text-gray-700 font-light italic">{weddingInfo?.location || "Mumbai, ITC Maratha"}</p>
+        <Button onClick={() => navigate("/rsvp")} className="mt-4 text-lg text-black px-6 py-3 block mx-auto">
+          RSVP Now
+        </Button>
+      </div>
     </div>
   );
 }

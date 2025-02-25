@@ -5,6 +5,7 @@ import HomePage from "@/pages/HomePage";
 import AboutPage from "@/pages/AboutPage";
 import LandingPage from "@/pages/LandingPage";
 import NavBar from "./components/NavBar";
+import RSVPPage from "@/pages/RSVPPage";
 
 export default function AppRouter() {
     const [accessGranted, setAccessGranted] = useState(false);
@@ -24,16 +25,19 @@ export default function AppRouter() {
     return (
         <Router>
             {accessGranted && <NavBar />}
-            <Routes>
-                {!accessGranted ? (
-                    <Route path="*" element={<LandingPage onAccessGranted={handleAccessGranted} />} />
-                ) : (
-                    <>
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="/about" element={<AboutPage />} />
-                    </>
-                )}
-            </Routes>
+            <div className="main-content">
+                <Routes>
+                    {!accessGranted ? (
+                        <Route path="*" element={<LandingPage onAccessGranted={handleAccessGranted} />} />
+                    ) : (
+                        <>
+                            <Route path="/" element={<HomePage />} />
+                            <Route path="/about" element={<AboutPage />} />
+                            <Route path="/rsvp" element={<RSVPPage />} />
+                        </>
+                    )}
+                </Routes>
+            </div>
         </Router>
     );
 }

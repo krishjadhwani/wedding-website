@@ -40,7 +40,7 @@ body {
 h1 {
   font-size: 3.5em;
   font-family: 'Dancing Script', cursive;
-  color: #444;
+  color: #000000;
 }
 
 button {
@@ -65,4 +65,9 @@ button:hover {
     color: #333;
     background-color: #f8f8f8;
   }
+}
+
+.main-content {
+  padding-top: 6rem;
+  /* Adjust based on navbar height */
 }
