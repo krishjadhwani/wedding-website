@@ -87,7 +87,7 @@ def read_root():
 
 @app.get("/api/info")
 def get_info():
-    return {"event": "Krish & Anisha's Wedding", "date": "November 30 - December 1, 2025", "location": "Mumbai, ITC Maratha"}
+    return {"event": "Krish & Anisha's Wedding", "date": "November 22 - 23 2025", "location": "Mumbai, ITC Maratha"}
 
 @app.get("/api/invite", response_model=RSVPResponse)
 def get_invite(first_name: str, last_name: str, db: Session = Depends(get_db)):

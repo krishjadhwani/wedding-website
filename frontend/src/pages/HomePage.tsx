@@ -2,16 +2,19 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@/components/Button";
 import backgroundImage from "@/assets/IMG_8260.jpg";
+import { fetchWeddingInfo } from "@/api";
 
 export default function HomePage() {
   const navigate = useNavigate();
   const [weddingInfo, setWeddingInfo] = useState<{ event: string; date: string; location: string } | null>(null);
 
   useEffect(() => {
-    fetch("/api/wedding-info") // Mocked fetch for now
-      .then((res) => res.json())
-      .then(setWeddingInfo);
+    fetchWeddingInfo()
+      .then((res) => setWeddingInfo(res))
+      .catch((reason) => console.error(reason))
   }, []);
+
+  console.log(weddingInfo)
 
   return (
     <div

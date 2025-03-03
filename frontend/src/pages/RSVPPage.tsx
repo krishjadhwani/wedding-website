@@ -43,8 +43,7 @@ export default function RSVPPage() {
             console.error("Error fetching invitation:", err);
 
             // Log error to backend
-            axios.post("http://localhost:8000/api/log-error", { error: err })
-                .catch(console.error); // Log any issues sending error to backend
+            axios.post("http://localhost:8000/api/log-error", { error: err }).catch(console.error);
 
             setError("Invitation not found. Please check your name.");
             setGuestData(null);
@@ -77,8 +76,7 @@ export default function RSVPPage() {
             console.error("Error submitting RSVP:", err);
 
             // Log error to backend
-            axios.post("http://localhost:8000/api/log-error", { error: err })
-                .catch(console.error); // Log any issues sending error to backend
+            axios.post("http://localhost:8000/api/log-error", { error: err }).catch(console.error);
 
             setError("Error submitting RSVP. Please try again.");
         }
@@ -134,15 +132,26 @@ export default function RSVPPage() {
                                 key={guest.id}
                                 className={`flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 ${index !== guestData.guests.length - 1 ? "border-b" : ""}`}
                             >
+                                {/* Guest Name & Email */}
                                 <div className="flex-auto text-left">
                                     <span className="block font-medium">{guest.first_name} {guest.last_name}</span>
                                     {guest.email && <span className="block text-sm text-gray-500">{guest.email}</span>}
                                 </div>
-                                <div className="sm:flex-col gap-2 mt-3 sm:mt-0 w-full sm:w-auto sm:flex-row sm:items-center sm:justify-end">
-                                    <Button onClick={() => submitRSVP(guest.id, "confirmed")} className="px-4 py-2 mb-2 w-full sm:w-auto" disabled={submitting === guest.id}>
+
+                                {/* RSVP Buttons with Ring Indicating Selection */}
+                                <div className="flex flex-col gap-2 mt-3 sm:mt-0 w-full sm:w-auto sm:flex-row sm:items-center sm:justify-end">
+                                    <Button
+                                        onClick={() => submitRSVP(guest.id, "confirmed")}
+                                        className={`px-4 py-2 w-full sm:w-auto ${guest.status === "confirmed" ? "ring-2 ring-green-500" : ""}`}
+                                        disabled={submitting === guest.id}
+                                    >
                                         {submitting === guest.id ? "Submitting..." : "✅ Confirm"}
                                     </Button>
-                                    <Button onClick={() => submitRSVP(guest.id, "declined")} className="px-4 py-2 w-full sm:w-auto bg-red-500 hover:bg-red-600" disabled={submitting === guest.id}>
+                                    <Button
+                                        onClick={() => submitRSVP(guest.id, "declined")}
+                                        className={`px-4 py-2 w-full sm:w-auto bg-red-500 hover:bg-red-600 ${guest.status === "declined" ? "ring-2 ring-red-500" : ""}`}
+                                        disabled={submitting === guest.id}
+                                    >
                                         {submitting === guest.id ? "Submitting..." : "❌ Decline"}
                                     </Button>
                                 </div>
