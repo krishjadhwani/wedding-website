@@ -1,24 +1,25 @@
 import { useState } from "react";
+import { validatePassword } from "@/api/apiService";
 
 export default function LandingPage({ onAccessGranted }: { onAccessGranted: () => void }) {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
+        setLoading(true);
 
-        const response = await fetch("http://localhost:8000/api/validate-password", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ password }),
-        });
+        const response = await validatePassword(password);
 
-        if (response.ok) {
+        if (response.data?.success) {
             onAccessGranted(); // Show main content
         } else {
-            setError("Incorrect password. Please try again.");
+            setError(response.error || "Incorrect password. Please try again.");
         }
+
+        setLoading(false);
     };
 
     return (
@@ -34,10 +35,15 @@ export default function LandingPage({ onAccessGranted }: { onAccessGranted: () =
                     onChange={(e) => setPassword(e.target.value)}
                     className="border p-2 rounded w-full mb-2"
                     placeholder="Enter password"
+                    disabled={loading}
                 />
                 {error && <p className="text-red-500 text-sm">{error}</p>}
-                <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">
-                    Submit
+                <button
+                    type="submit"
+                    className="bg-blue-600 text-black px-4 py-2 rounded hover:bg-blue-700 w-full"
+                    disabled={loading}
+                >
+                    {loading ? "Submitting..." : "Submit"}
                 </button>
             </form>
         </div>
