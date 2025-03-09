@@ -1,0 +1,9 @@
+# pnpm specific
+.pnpm-store/
+**/node_modules/.pnpm
+.pnpm-debug.log
+.DS_Store
+
+# Dependencies
+node_modules
+.pnpm-store/
